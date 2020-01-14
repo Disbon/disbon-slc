@@ -18,20 +18,31 @@
       <li class="nav-item">
         <a class="nav-link" href="#">Switch account</a>
       </li>-->
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Chamados</a>
-        <div class="dropdown-menu" aria-labelledby="dropdown01">
-          <a class="dropdown-item" href="{{ url('chamados') }}">Consultar Chamados</a>
-          <a class="dropdown-item" href="{{ url('chamados/create') }}">Novo Chamado</a>
-         </div>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Inventário</a>
-        <div class="dropdown-menu" aria-labelledby="dropdown01">
-          <a class="dropdown-item" href="{{ url('inventarios') }}">Consultar Inventário</a>
-          <a class="dropdown-item" href="{{ url('inventarios/create') }}">Atualizar</a>
-         </div>
-      </li>    </ul>
+      <?php 
+        $menus['CHAMADOS'] = "<li class=\"nav-item dropdown\">
+          <a class=\"nav-link dropdown-toggle\" id=\"dropdown01\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">Chamados</a>
+          <div class=\"dropdown-menu\" aria-labelledby=\"dropdown01\">
+            <a class=\"dropdown-item\" href=\"chamados\">Consultar Chamados</a>
+            <a class=\"dropdown-item\" href=\"chamados/create\">Novo Chamado</a>
+          </div>
+        </li>";
+        $menus['INVENTARIOS'] = "<li class=\"nav-item dropdown\">
+          <a class=\"nav-link dropdown-toggle\" id=\"dropdown01\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">Inventário</a>
+          <div class=\"dropdown-menu\" aria-labelledby=\"dropdown01\">
+            <a class=\"dropdown-item\" href=\"inventarios\">Consultar Inventário</a>
+            <a class=\"dropdown-item\" href=\"inventarios/create\">Atualizar</a>
+          </div>
+        </li>" ;
+
+        $permissoes = Request::session()->get('menus');
+        foreach($permissoes as $p){
+          if (array_key_exists($p, $menus))
+            echo $menus[$p];
+
+        }
+
+      ?>
+          </ul>
     <div class="form-inline my-2 my-lg-0">
       </span><a href="{{ url('logout') }}" class="btn btn-outline-success my-2 my-sm-0">Logout</a>
     </div>

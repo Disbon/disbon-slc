@@ -18,9 +18,45 @@
     @endif
     </div>
   <h1 class="h3 mb-3 font-weight-normal">Consultar Inventário</h1>
+  <form action="{{route('inventarios.filtro')}}" method="POST" id="logForm" class="form-signin">
+  @csrf
+  <div class="form-label-group row">
+    <div class="col-sm">
+      <label for="filial">Filial</label>
+      <select name="filial" class="form-control col-sm">
+        <option value="0">Todas as Filiais</option>
+        @foreach( $filiais as $k => $f )
+          <option value="{{$k}}">{{ $f }} </option>
+        @endforeach
+      </select>
+    </div>
+    <div class="col-sm">
+      <label for="tipo_equipamento">Tipo de Equipamento</label>
+      <select name="tipo_equipamento" class="form-control col-sm">
+        <option value="0">Todos os Tipos</option>
+        @foreach( $tipo_equipamentos as $te )
+          <option value="{{$te->id}}" >{{ $te->descricao }} </option>
+        @endforeach
+      </select>
+    </div>
+    <div class="col-sm">
+      <label for="setor">Setor</label>
+      <select name="setor" class="form-control ">
+        <option value="0">Todos os Setores</option>
+        @foreach( $setores as $s )
+          <option value="{{$s->id}}" >{{ $s->descricao }} </option>
+        @endforeach
+      </select>
+    </div>
+  </div> 
+  <button type="submit" class="btn btn-primary">Filtrar</button>
+  <br />
+
+  </form>
   <table class="table">
     <thead class="black white-text">
       <tr>
+        <th scope="col">Filial</th>
         <th scope="col">Tipo</th>
         <th scope="col">Descrição</th>
         <th scope="col">Setor</th>
@@ -32,7 +68,8 @@
     <tbody>
       @foreach($inventarios as $inventario)
         <tr>
-          <th scope="row">{{$inventario->tipo_equipamento}}</th>
+          <td scope="row">{{$inventario->codfilial}}</td>
+          <td>{{$inventario->tipo_equipamento}}</td>
           <td>{{$inventario->descricao}}</td>
           <td>{{$inventario->setor}}</td>
           <td>{{$inventario->usuario}}</td>

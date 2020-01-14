@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator,Redirect,Response;
 Use App\User;
+Use App\Permissoes;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
@@ -38,6 +39,12 @@ class AuthController extends Controller
  
         if ($pass===$usuario->senhabd) {
             // Authentication passed...
+            $permissoes = Permissoes::where('usuario', $usuario->matricula)->get();
+            $menus = [];
+            foreach ($permissoes as $p){
+                $menus[] = $p->menu;
+            }
+            $request->session()->put('menus', $menus);
             Auth::loginUsingId($usuario->matricula);
             return redirect()->intended('');
         }
